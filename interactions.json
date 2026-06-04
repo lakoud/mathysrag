@@ -1,0 +1,12 @@
+{
+  "interactions": [
+    {
+      "query": "Qui a écrit Les Misérables ?",
+      "response": "C'est Victor Hugo.",
+      "retrieved_documents": [
+        {"content": "Les Misérables est un roman de Victor Hugo publié en 1862.", "source": "Moi"}
+      ],
+  "reference": "Victor Hugo a écrit Les Misérables."
+    }
+  ]
+}

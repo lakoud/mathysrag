@@ -1,0 +1,61 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: rems-postgres
+    environment:
+      POSTGRES_USER: ${REMS_DB_USER:-rems}
+      POSTGRES_PASSWORD: ${REMS_DB_PASSWORD:-rems_pass}
+      POSTGRES_DB: ${REMS_DB_NAME:-rems}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${REMS_DB_USER:-rems} -d ${REMS_DB_NAME:-rems}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rems-app:
+    build:
+      context: .
+    container_name: rems-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      REMS_DATABASE_URL: postgresql://${REMS_DB_USER:-rems}:${REMS_DB_PASSWORD:-rems_pass}@postgres:5432/${REMS_DB_NAME:-rems}
+      REMS_GOOGLE_API_KEY: ${REMS_GOOGLE_API_KEY}
+      REMS_CHATBOT_API_URL: ${REMS_CHATBOT_API_URL}
+      REMS_CHATBOT_API_KEY: ${REMS_CHATBOT_API_KEY}
+    volumes:
+      - ./reports:/app/reports
+    ports:
+      - "8000:8000"
+    command: sh -c "rems init-db && rems api --host 0.0.0.0 --port 8000"
+    restart: unless-stopped
+
+  rems-dashboard:
+    build:
+      context: .
+    container_name: rems-dashboard
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rems-app:
+        condition: service_started
+    environment:
+      REMS_DATABASE_URL: postgresql://${REMS_DB_USER:-rems}:${REMS_DB_PASSWORD:-rems_pass}@postgres:5432/${REMS_DB_NAME:-rems}
+      REMS_GOOGLE_API_KEY: ${REMS_GOOGLE_API_KEY}
+      REMS_REMS_API_BASE_URL: http://rems-app:8000
+      REMS_CHATBOT_API_URL: ${REMS_CHATBOT_API_URL}
+    volumes:
+      - ./reports:/app/reports
+    ports:
+      - "8501:8501"
+    command: rems web --host 0.0.0.0 --port 8501
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  reports:

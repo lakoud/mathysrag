@@ -1,0 +1,76 @@
+[project]
+name = "rems"
+version = "0.1.0"
+description = "RAG Evaluation & Monitoring System - Evaluates and monitors RAG chatbot performance"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # Database
+    "sqlalchemy>=2.0.0",
+    "psycopg2-binary>=2.9.9",
+    "alembic>=1.13.0",
+    # RAG Evaluation
+    "ragas>=0.1.0",
+    "datasets>=2.16.0",
+    # LLM Integration
+    "langchain>=0.1.0",
+    "langchain-google-genai>=1.0.0",
+    # HTTP Client
+    "httpx>=0.26.0",
+    # Report Generation
+    "jinja2>=3.1.0",
+    "weasyprint>=60.0",
+    # Data Processing
+    "pandas>=2.1.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    # Utilities
+    "pyyaml>=6.0.0",
+    "python-dotenv>=1.0.0",
+    "structlog>=24.1.0",
+    # Web Interface
+    "streamlit>=1.30.0",
+    "plotly>=5.18.0",
+<<<<<<< HEAD
+    "joblib>=1.5.3",
+    "scikit-learn==1.4.2",
+=======
+
+    # API
+    "fastapi>=0.109.0",
+    "uvicorn>=0.27.0",
+>>>>>>> 6b10b543ba67f8dd50dd88634c0095970aa0719d
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+    "mypy>=1.8.0",
+]
+test-generation = [
+    "giskard>=2.0.0",
+]
+
+[project.scripts]
+rems = "rems.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rems"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true

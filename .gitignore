@@ -1,0 +1,67 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Environment variables
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Reports output (root level only, not src/rems/reports/)
+/reports/
+/recommendations.yaml
+
+# Database
+*.db
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Test and temporary files
+test_evaluator.py
+src/rems/test_evaluator.py
+test_insert_data.py
+# Assistant generated artifacts
+*.md.resolved*
+implementation_plan*.md
+task*.md
+walkthrough*.md
+doc_*.md
+
+# Local test datasets
+chatbot_results.json
+test_interactions*.json
+debug_hallucination.py
+verify_client.py
+search_é.py
+check_env.py
+check_db_encoding.py
+debug.log
+test_out.txt
+test_reports/
+ragas_prompts/
+src/rems/web/pages/get_prompt.py
+verify_legal_prompts.py
+documentation_evaluateurs_v2_fr.md
+check_metrics.py
+debug_ragas.py
+export_prompts.py
+verify_legal_prompts
+rems_api_postman_collection.json
